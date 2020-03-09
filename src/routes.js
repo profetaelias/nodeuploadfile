@@ -16,4 +16,16 @@ routes.post('/posts', multer(multerConfig).single('file'), async (req, res) => {
     return res.json(post)
 });
 
+routes.delete('/posts/:id', async (req, res) => {
+    await Post.findByIdAndDelete({_id: req.params.id}).exec();
+        
+    console.log(req.params.id);
+    return res.status(200);
+})
+
+routes.get('/posts', async (req,res) => {
+    const posts = await Post.find({}).exec();
+    return res.send(posts);
+});
+
 module.exports = routes;
